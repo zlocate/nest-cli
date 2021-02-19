@@ -3,6 +3,7 @@ import { NpmRunner } from './npm.runner';
 import { Runner } from './runner';
 import { SchematicRunner } from './schematic.runner';
 import { YarnRunner } from './yarn.runner';
+import { PnpmRunner } from './pnpm.runner';
 
 export class RunnerFactory {
   public static create(runner: Runner) {
@@ -12,6 +13,9 @@ export class RunnerFactory {
 
       case Runner.NPM:
         return new NpmRunner();
+
+      case Runner.PNPM:
+        return new PnpmRunner();
 
       case Runner.YARN:
         return new YarnRunner();

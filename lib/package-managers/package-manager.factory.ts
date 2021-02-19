@@ -17,6 +17,10 @@ export class PackageManagerFactory {
   }
 
   public static async find(): Promise<AbstractPackageManager> {
+    const DEPENDENCY_CONFIGS = {
+      'yarn.lock': PackageManager.YARN,
+      'pnpm-lock.yaml': PackageManager.PNPM,
+    };
     return new Promise<AbstractPackageManager>((resolve) => {
       readdir(process.cwd(), (error, files) => {
         if (error) {
@@ -24,6 +28,10 @@ export class PackageManagerFactory {
         } else {
           if (files.findIndex((filename) => filename === 'yarn.lock') > -1) {
             resolve(this.create(PackageManager.YARN));
+          } else if (
+            files.findIndex((filename) => filename === 'pnpm-lock.yaml') > -1
+          ) {
+            resolve(this.create(PackageManager.PNPM));
           } else {
             resolve(this.create(PackageManager.NPM));
           }
